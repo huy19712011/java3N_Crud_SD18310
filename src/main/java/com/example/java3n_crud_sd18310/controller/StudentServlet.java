@@ -1,6 +1,7 @@
 package com.example.java3n_crud_sd18310.controller;
 
 import com.example.java3n_crud_sd18310.entity.Student;
+import com.example.java3n_crud_sd18310.service.StudentService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -17,6 +18,9 @@ import java.util.Map;
         "/students/delete"
 })
 public class StudentServlet extends HttpServlet {
+
+    private StudentService service = new StudentService();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -70,9 +74,12 @@ public class StudentServlet extends HttpServlet {
     private void listStudents(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // data: students
         ArrayList<Student> students = new ArrayList<>();
-        students.add(new Student(1001L, "student 1", "email 1", "phone 1"));
-        students.add(new Student(1002L, "student 2", "email 2", "phone 2"));
-        students.add(new Student(1003L, "student 3", "email 3", "phone 3"));
+
+        students = service.getStudents();
+
+        //students.add(new Student(1001L, "student 1", "email 1", "phone 1"));
+        //students.add(new Student(1002L, "student 2", "email 2", "phone 2"));
+        //students.add(new Student(1003L, "student 3", "email 3", "phone 3"));
 
         // => jsp
         request.setAttribute("students", students);
