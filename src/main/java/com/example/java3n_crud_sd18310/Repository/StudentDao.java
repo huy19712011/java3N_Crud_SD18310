@@ -17,4 +17,9 @@ public class StudentDao {
 
         return students;
     }
+
+    public void deleteStudent(Long id) {
+
+        students.removeIf(student -> student.getId().equals(id));
+    }
 }

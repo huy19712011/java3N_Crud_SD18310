@@ -64,7 +64,16 @@ public class StudentServlet extends HttpServlet {
 
     }
 
-    private void deleteStudent(HttpServletRequest request, HttpServletResponse response) {
+    private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        // Id
+        Long id = Long.parseLong(request.getParameter("id"));
+
+        // delete
+        service.deleteStudent(id);
+
+        // back to view
+        response.sendRedirect("/students");
     }
 
     private void insertStudent(HttpServletRequest request, HttpServletResponse response) {
