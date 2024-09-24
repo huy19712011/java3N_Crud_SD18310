@@ -18,4 +18,9 @@ public class StudentService {
 
         studentDao.deleteStudent(id);
     }
+
+    public void addStudent(Student student) {
+
+        studentDao.addStudent(student);
+    }
 }

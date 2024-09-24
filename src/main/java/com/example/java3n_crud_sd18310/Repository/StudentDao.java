@@ -22,4 +22,9 @@ public class StudentDao {
 
         students.removeIf(student -> student.getId().equals(id));
     }
+
+    public void addStudent(Student student) {
+
+        students.add(student);
+    }
 }

@@ -15,6 +15,7 @@ import java.util.Map;
 @WebServlet(name = "StudentServlet", value = {
         "/students",
         "/students/new",
+        "/students/insert",
         "/students/delete"
 })
 public class StudentServlet extends HttpServlet {
@@ -54,6 +55,9 @@ public class StudentServlet extends HttpServlet {
                 listStudents(request, response);
                 break;
             case "/students/new":
+                showNewForm(request, response);
+                break;
+            case "/students/insert":
                 insertStudent(request, response);
                 break;
             case "/students/delete":
@@ -62,6 +66,12 @@ public class StudentServlet extends HttpServlet {
         }
 
 
+    }
+
+    private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.getRequestDispatcher("/view/addStudentForm.jsp")
+                .forward(request, response);
     }
 
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -76,8 +86,21 @@ public class StudentServlet extends HttpServlet {
         response.sendRedirect("/students");
     }
 
-    private void insertStudent(HttpServletRequest request, HttpServletResponse response) {
+    private void insertStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //read student info from form
+        Long id = Long.parseLong(request.getParameter("id"));
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
 
+        // create new student
+        Student student = new Student(id, name, email, phone);
+
+        // add student to list
+        service.addStudent(student);
+
+        // back to table
+        response.sendRedirect("/students");
     }
 
     private void listStudents(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -97,6 +120,6 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 }
