@@ -23,4 +23,14 @@ public class StudentService {
 
         studentDao.addStudent(student);
     }
+
+    public Student getStudentById(Long id) {
+
+        return studentDao.getStudentById(id);
+    }
+
+    public void updateStudent(Student student) {
+
+        studentDao.updateStudent(student);
+    }
 }
