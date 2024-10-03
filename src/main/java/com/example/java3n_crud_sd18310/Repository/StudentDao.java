@@ -63,7 +63,32 @@ public class StudentDao {
 
     public void deleteStudent(Long id) {
 
-        students.removeIf(student -> student.getId().equals(id));
+        //students.removeIf(student -> student.getId().equals(id));
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = dcm.getConnection();
+
+            String sql = """
+                        DELETE FROM students WHERE id=?;
+                    """;
+
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, id);
+
+            preparedStatement.executeUpdate();
+
+            System.out.println("done...");
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            dcm.close(null, preparedStatement, connection);
+        }
     }
 
     public void addStudent(Student student) {
